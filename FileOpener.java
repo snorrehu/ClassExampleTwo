@@ -22,6 +22,9 @@ public class FileOpener extends JFrame {
 
     String fileInfo, fileAsString, searchMessage;
 
+
+    //Array for storing words, should probably be in a ArrayList
+
     String[] words;
 
     public static void main(String[] args) {
@@ -118,6 +121,8 @@ public class FileOpener extends JFrame {
             }
 
             fileAsString = builder.toString();
+
+            //Adds the words from the string made by Stringbuilder to an array word by word
 
             words = fileAsString.split("\\s+");
 
