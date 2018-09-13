@@ -5,7 +5,9 @@ public class Arithmetic {
 
     public int addNumber(String _num1, String _num2) {
 
-
+        if(_num1.equals("")) {
+            _num1 = "0";
+        }
 
         int num1 = Integer.parseInt(_num1);
         int num2 = Integer.parseInt(_num2);
@@ -15,6 +17,10 @@ public class Arithmetic {
 
     public int subNumber(String _num1, String _num2) {
 
+        if(_num1.equals("")) {
+            _num1 = "0";
+        }
+
         int num1 = Integer.parseInt(_num1);
         int num2 = Integer.parseInt(_num2);
 
@@ -23,6 +29,10 @@ public class Arithmetic {
 
     public int multNumber(String _num1, String _num2) {
 
+        if(_num1.equals("")) {
+            _num1 = "0";
+        }
+
         int num1 = Integer.parseInt(_num1);
         int num2 = Integer.parseInt(_num2);
 
@@ -30,6 +40,10 @@ public class Arithmetic {
     }
 
     public double divNumber(String _num1, String _num2) {
+
+        if(_num1.equals("")) {
+            _num1 = "0";
+        }
 
         double num1 = Double.parseDouble(_num1);
         double num2 = Double.parseDouble(_num2);
