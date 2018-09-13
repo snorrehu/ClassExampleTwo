@@ -7,7 +7,7 @@ public class CalcFrame extends JFrame{
 
     public JButton oneBut, twoBut, threeBut, fourBut, fiveBut, sixBut, sevenBut,
             eightBut, nineBut, zeroBut, plusBut, minusBut, multBut, divBut, equalsBut;
-    JTextArea numberText;
+    public JTextArea numberText;
 
     String firstNum = "";
     String secondNum = "";
@@ -56,7 +56,7 @@ public class CalcFrame extends JFrame{
         inputPanel.setLayout(new BorderLayout());
 
         // Add textarea, setting size
-        JTextArea numberText= new JTextArea("Heyhey");
+        numberText= new JTextArea("Heyhey");
         numberText.setPreferredSize(new Dimension(100,75));
 
 
@@ -178,20 +178,22 @@ public class CalcFrame extends JFrame{
             }
 
             if(e.getSource() == plusBut){
-                System.out.println("Number 1: " + firstNum);
+                numberText.append(" + ")
                 aritFlag = 1;
             }
 
             if(e.getSource() == minusBut){
-                System.out.println("Number 1: " + firstNum);
+                numberText.append(" - ")
                 aritFlag = 2;
             }
 
             if(e.getSource() == multBut){
+                numberText.append(" * ")
                 aritFlag = 3;
             }
 
             if(e.getSource() == divBut){
+                numberText.append(" / ")
                 aritFlag = 4;
             }
 
@@ -282,7 +284,7 @@ public class CalcFrame extends JFrame{
                 }
             }
 
-
+setText();
 
         }
     }
