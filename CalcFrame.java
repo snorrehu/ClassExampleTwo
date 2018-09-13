@@ -11,7 +11,8 @@ public class CalcFrame extends JFrame{
 
     String firstNum = "";
     String secondNum = "";
-    String temp ="";
+    String temp = "";
+
     int aritFlag = 0;
 
     /*
@@ -56,7 +57,7 @@ public class CalcFrame extends JFrame{
         inputPanel.setLayout(new BorderLayout());
 
         // Add textarea, setting size
-        numberText= new JTextArea("Heyhey");
+        numberText= new JTextArea();
         numberText.setPreferredSize(new Dimension(100,75));
 
 
@@ -149,51 +150,55 @@ public class CalcFrame extends JFrame{
 
             if(e.getSource() == equalsBut){
 
+                temp = numberText.getText();
 
                     System.out.println("Second num :" + secondNum + "\n");
                     if (aritFlag == 1) {
 
 
-                        temp = Integer.toString((arit.addNumber(firstNum, secondNum)));
-                        numberText.setText(temp);
+
+                        numberText.setText(temp + " = " + arit.addNumber(firstNum, secondNum));
                     }
                     if (aritFlag == 2) {
 
-                        System.out.println( arit.subNumber(firstNum, secondNum));
+                        numberText.setText(temp + " = " + arit.subNumber(firstNum, secondNum));
                     }
                     if (aritFlag == 3) {
 
-                        numberText.setText("" + arit.multNumber(firstNum, secondNum));
+                        numberText.setText(temp + " = " + arit.multNumber(firstNum, secondNum));
                     }
                     if (aritFlag == 4) {
 
-                        numberText.setText("" + arit.divNumber(firstNum, secondNum));
+                        numberText.setText(temp + " = " + arit.divNumber(firstNum, secondNum));
                     }
 
 
                     firstNum = secondNum = "";
 
 
-                aritFlag = 0;
+                aritFlag = -1;
+
+
             }
 
             if(e.getSource() == plusBut){
-                numberText.append(" + ")
+
+                numberText.append("+");
                 aritFlag = 1;
             }
 
             if(e.getSource() == minusBut){
-                numberText.append(" - ")
+                numberText.append("-");
                 aritFlag = 2;
             }
 
             if(e.getSource() == multBut){
-                numberText.append(" * ")
+                numberText.append("*");
                 aritFlag = 3;
             }
 
             if(e.getSource() == divBut){
-                numberText.append(" / ")
+                numberText.append("/");
                 aritFlag = 4;
             }
 
@@ -205,7 +210,6 @@ public class CalcFrame extends JFrame{
                 if(aritFlag != 0) {
                     secondNum += 1;
                 }
-
 
             }
 
@@ -284,7 +288,9 @@ public class CalcFrame extends JFrame{
                 }
             }
 
-setText();
+        setText();
+
+
 
         }
     }
@@ -293,10 +299,20 @@ setText();
         if(aritFlag == 0){
             numberText.setText(firstNum + " ");
         }
-        if(aritFlag != 0){
-            numberText.append(secondNum + "");
+        if(aritFlag > 0){
+
+                temp = numberText.getText();
+            numberText.setText(temp + " " + secondNum + "");
+        }
+        if(aritFlag == -1){
+            aritFlag = 0;
         }
 
+    }
+
+    public void clearText() {
+        numberText.setText("");
+        
     }
 
 
