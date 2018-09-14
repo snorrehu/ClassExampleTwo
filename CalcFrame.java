@@ -13,6 +13,8 @@ public class CalcFrame extends JFrame{
     private String firstNum = "";
     private  String secondNum = "";
     private  String temp = "";
+    double storage;
+    double answer;
 
     int aritFlag = 0;
 
@@ -85,7 +87,7 @@ public class CalcFrame extends JFrame{
             }
         }
 
-       
+
 
 
 
@@ -99,7 +101,7 @@ public class CalcFrame extends JFrame{
         this.add(buttonPanel, BorderLayout.CENTER);
 
         setVisible(true);
-        
+
     }
 
     public class ListenForButton implements ActionListener {
@@ -110,34 +112,41 @@ public class CalcFrame extends JFrame{
 
         public void actionPerformed(ActionEvent e){
 
-       
+
 
             if(e.getSource() == button[15]){
 
                 temp = numberText.getText();
                 System.out.println("==== FUNKER");
-                    System.out.println("Second num :" + secondNum + "\n");
-                    if (aritFlag == 1) {
+                System.out.println("Second num :" + secondNum + "\n");
+                if (aritFlag == 1) {
 
 
+                    answer = arit.addNumber(firstNum,secondNum);
+                    numberText.setText(temp + " = " + arit.addNumber(firstNum, secondNum));
+                }
+                if (aritFlag == 2) {
 
-                        numberText.setText(temp + " = " + arit.addNumber(firstNum, secondNum));
-                    }
-                    if (aritFlag == 2) {
+                    answer = arit.subNumber(firstNum,secondNum);
+                    numberText.setText(temp + " = " + arit.subNumber(firstNum, secondNum));
+                }
+                if (aritFlag == 3) {
 
-                        numberText.setText(temp + " = " + arit.subNumber(firstNum, secondNum));
-                    }
-                    if (aritFlag == 3) {
+                    answer = arit.multNumber(firstNum,secondNum);
+                    numberText.setText(temp + " = " + arit.multNumber(firstNum, secondNum));
+                }
+                if (aritFlag == 4) {
+                    if(secondNum.equals("0")){
+                        numberText.setText("Don't divide by zero buddy");
+                    } else {
 
-                        numberText.setText(temp + " = " + arit.multNumber(firstNum, secondNum));
-                    }
-                    if (aritFlag == 4) {
-
+                        answer = arit.divNumber(firstNum, secondNum);
                         numberText.setText(temp + " = " + arit.divNumber(firstNum, secondNum));
                     }
+                }
 
 
-                    firstNum = secondNum = "";
+                firstNum = secondNum = "";
 
 
                 aritFlag = -1;
@@ -147,28 +156,45 @@ public class CalcFrame extends JFrame{
 
             if(e.getSource() == button[14]){
 
-                numberText.append("+");
-                aritFlag = 1;
+                if(aritFlag == 0) {
+                    numberText.append("+");
+                    aritFlag = 1;
+                }
             }
 
             if(e.getSource() == button[11]){
-                numberText.append("-");
-                aritFlag = 2;
+                if(aritFlag == 0) {
+                    numberText.append("-");
+                    aritFlag = 2;
+                }
             }
 
             if(e.getSource() == button[7]){
-                numberText.append("*");
-                aritFlag = 3;
+                if(aritFlag == 0) {
+                    numberText.append("*");
+                    aritFlag = 3;
+                }
             }
 
             if(e.getSource() == button[3]){
-                numberText.append("/");
-                aritFlag = 4;
+                if(aritFlag == 0) {
+                    numberText.append("/");
+                    aritFlag = 4;
+                }
             }
 
             if(e.getSource() == button[13]){
-                numberText.append("ANS");
-                aritFlag = 5;
+                if(storage == 0){
+                    storage = answer;
+                    System.out.println(answer + " saved to memory");
+                    numberText.setText(answer + "saved to memory");
+                } else {
+                    firstNum = Double.toString(answer);
+
+                    System.out.println(answer + " retrieved from memory");
+                }
+
+
             }
 
             if(e.getSource() == button[8]){
@@ -257,7 +283,7 @@ public class CalcFrame extends JFrame{
                 }
             }
 
-        setText();
+            setText();
 
 
 
@@ -270,7 +296,7 @@ public class CalcFrame extends JFrame{
         }
         if(aritFlag > 0){
 
-                temp = numberText.getText();
+            temp = numberText.getText();
             numberText.setText(temp + " " + secondNum + "");
         }
         if(aritFlag == -1){
