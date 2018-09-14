@@ -2,19 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 
 public class CalcFrame extends JFrame{
 
     private JTextArea numberText;
-    JButton button[] = new JButton[16];
+    JPanel buttonPanel, inputPanel;
+    private JButton button[] = new JButton[16];
 
 
     private String firstNum = "";
-    private  String secondNum = "";
-    private  String temp = "";
-    double storage;
-    double answer;
+    private String secondNum = "";
+    private String temp = "";
+    private String storage ="";
+    private String answer = "";
 
     int aritFlag = 0;
 
@@ -49,15 +50,12 @@ public class CalcFrame extends JFrame{
 
         //Listeners
         ListenForButton lForButton = new ListenForButton();
+        
 
-        //HEYHEYEYJAJAJA
-        //TESTER
-        JPanel number = new JPanel();
+        // Init Panels
 
-        // Declaring Panels
-
-        JPanel buttonPanel = new JPanel();
-        JPanel inputPanel = new JPanel();
+        buttonPanel = new JPanel();
+        inputPanel = new JPanel();
 
         //Setting panel layouts
 
@@ -70,16 +68,13 @@ public class CalcFrame extends JFrame{
 
 
         int i = 0;
+        
         for(String[] row:buttons){
             for(String elementInButtonMatrix:row){
                 //Create new button
                 button[i] = new JButton(elementInButtonMatrix);
                 //Set action command name for button
-
-
-
                 //Add listener
-                //button.addActionListener(listener);
                 //Add to panel
                 button[i].addActionListener(lForButton);
                 buttonPanel.add(button[i]);
@@ -87,52 +82,38 @@ public class CalcFrame extends JFrame{
             }
         }
 
-
-
-
-
-
         inputPanel.add(numberText, BorderLayout.CENTER);
-
-
+        
         //Adding panels to frame
 
         this.add(inputPanel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.CENTER);
 
         setVisible(true);
-
     }
 
     public class ListenForButton implements ActionListener {
 
         Arithmetic arit = new Arithmetic();
 
-
-
         public void actionPerformed(ActionEvent e){
-
-
 
             if(e.getSource() == button[15]){
 
                 temp = numberText.getText();
-                System.out.println("==== FUNKER");
-                System.out.println("Second num :" + secondNum + "\n");
                 if (aritFlag == 1) {
 
-
-                    answer = arit.addNumber(firstNum,secondNum);
+                    answer = "" + arit.addNumber(firstNum,secondNum);
                     numberText.setText(temp + " = " + arit.addNumber(firstNum, secondNum));
                 }
                 if (aritFlag == 2) {
 
-                    answer = arit.subNumber(firstNum,secondNum);
+                    answer = "" + arit.subNumber(firstNum,secondNum);
                     numberText.setText(temp + " = " + arit.subNumber(firstNum, secondNum));
                 }
                 if (aritFlag == 3) {
 
-                    answer = arit.multNumber(firstNum,secondNum);
+                    answer = "" + arit.multNumber(firstNum,secondNum);
                     numberText.setText(temp + " = " + arit.multNumber(firstNum, secondNum));
                 }
                 if (aritFlag == 4) {
@@ -140,24 +121,20 @@ public class CalcFrame extends JFrame{
                         numberText.setText("Don't divide by zero buddy");
                     } else {
 
-                        answer = arit.divNumber(firstNum, secondNum);
+                        answer = "" + arit.divNumber(firstNum, secondNum);
                         numberText.setText(temp + " = " + arit.divNumber(firstNum, secondNum));
                     }
                 }
 
-
                 firstNum = secondNum = "";
-
-
                 aritFlag = -1;
-
-
             }
 
             if(e.getSource() == button[14]){
 
                 if(aritFlag == 0) {
                     numberText.append("+");
+                    temp = numberText.getText();
                     aritFlag = 1;
                 }
             }
@@ -165,13 +142,16 @@ public class CalcFrame extends JFrame{
             if(e.getSource() == button[11]){
                 if(aritFlag == 0) {
                     numberText.append("-");
+                    temp = numberText.getText();
                     aritFlag = 2;
                 }
             }
 
             if(e.getSource() == button[7]){
                 if(aritFlag == 0) {
+
                     numberText.append("*");
+                    temp = numberText.getText();
                     aritFlag = 3;
                 }
             }
@@ -179,22 +159,20 @@ public class CalcFrame extends JFrame{
             if(e.getSource() == button[3]){
                 if(aritFlag == 0) {
                     numberText.append("/");
+                    temp = numberText.getText();
                     aritFlag = 4;
                 }
             }
 
             if(e.getSource() == button[13]){
-                if(storage == 0){
+                if(storage.equals("0")){
                     storage = answer;
-                    System.out.println(answer + " saved to memory");
                     numberText.setText(answer + "saved to memory");
                 } else {
-                    firstNum = Double.toString(answer);
+                    firstNum = answer;
 
                     System.out.println(answer + " retrieved from memory");
                 }
-
-
             }
 
             if(e.getSource() == button[8]){
@@ -205,7 +183,6 @@ public class CalcFrame extends JFrame{
                 if(aritFlag != 0) {
                     secondNum += 1;
                 }
-
             }
 
             if(e.getSource() == button[9]){
@@ -215,8 +192,8 @@ public class CalcFrame extends JFrame{
                 if(aritFlag != 0){
                     secondNum += "2";
                 }
-
             }
+
             if(e.getSource() == button[10]){
                 if(aritFlag == 0){
                     firstNum += "3";
@@ -225,6 +202,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "3";
                 }
             }
+
             if(e.getSource() == button[4]){
                 if(aritFlag == 0){
                     firstNum += "4";
@@ -233,6 +211,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "4";
                 }
             }
+
             if(e.getSource() == button[5]){
                 if(aritFlag == 0){
                     firstNum += "5";
@@ -241,6 +220,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "5";
                 }
             }
+
             if(e.getSource() == button[6]){
                 if(aritFlag == 0){
                     firstNum += "6";
@@ -249,6 +229,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "6";
                 }
             }
+
             if(e.getSource() == button[0]){
                 if(aritFlag == 0){
                     firstNum += "7";
@@ -266,6 +247,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "8";
                 }
             }
+
             if(e.getSource() == button[2]){
                 if(aritFlag == 0){
                     firstNum += "9";
@@ -283,10 +265,8 @@ public class CalcFrame extends JFrame{
                 }
             }
 
+            // Calls set text to set/append text to screen
             setText();
-
-
-
         }
     }
 
@@ -295,34 +275,10 @@ public class CalcFrame extends JFrame{
             numberText.setText(firstNum + " ");
         }
         if(aritFlag > 0){
-
-            temp = numberText.getText();
             numberText.setText(temp + " " + secondNum + "");
         }
         if(aritFlag == -1){
             aritFlag = 0;
         }
-
     }
-
-    public void clearText() {
-        numberText.setText("");
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
