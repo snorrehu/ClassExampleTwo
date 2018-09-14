@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class CalcFrame extends JFrame{
 
     private JTextArea numberText;
@@ -50,6 +51,7 @@ public class CalcFrame extends JFrame{
         //Listeners
         ListenForButton lForButton = new ListenForButton();
 
+
         // Init Panels
 
         buttonPanel = new JPanel();
@@ -63,6 +65,7 @@ public class CalcFrame extends JFrame{
         // Add textarea, setting size
         numberText= new JTextArea();
         numberText.setPreferredSize(new Dimension(100,75));
+
 
         int i = 0;
 
@@ -165,10 +168,12 @@ public class CalcFrame extends JFrame{
                 if(storage == 0){
                     storage = answer;
                     numberText.setText(answer + "saved to private Stringmemory");
+                } else if (aritFlag != 0){
+                    secondNum = Double.toString(storage);
+                    storage = 0;
+
                 } else {
                     firstNum = Double.toString(answer);
-
-
                    storage = 0;
                 }
             }
