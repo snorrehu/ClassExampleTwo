@@ -2,16 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CalcFrame extends JFrame{
 
-    public JButton oneBut, twoBut, threeBut, fourBut, fiveBut, sixBut, sevenBut,
-            eightBut, nineBut, zeroBut, plusBut, minusBut, multBut, divBut, equalsBut;
-    public JTextArea numberText;
+    private JTextArea numberText;
+    JButton button[] = new JButton[16];
 
-    String firstNum = "";
-    String secondNum = "";
-    String temp = "";
+
+    private String firstNum = "";
+    private  String secondNum = "";
+    private  String temp = "";
 
     int aritFlag = 0;
 
@@ -23,6 +24,13 @@ public class CalcFrame extends JFrame{
         3; Multiply
         4; Divide
      */
+
+    private static String buttons[][] = {
+            {"7","8","9","/"},
+            {"4","5","6","*"},
+            {"1","2","3","-"},
+            {"0","Ans","+","="}
+    };
 
     public static void main(String[] args){
         CalcFrame ex = new CalcFrame();
@@ -46,14 +54,12 @@ public class CalcFrame extends JFrame{
 
         // Declaring Panels
 
-        JPanel numberPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         JPanel inputPanel = new JPanel();
-        JPanel aritPanel = new JPanel();
 
         //Setting panel layouts
 
-        numberPanel.setLayout(new GridLayout(4,3));
-        aritPanel.setLayout(new GridLayout(4,1));
+        buttonPanel.setLayout(new GridLayout(4,4));
         inputPanel.setLayout(new BorderLayout());
 
         // Add textarea, setting size
@@ -61,73 +67,28 @@ public class CalcFrame extends JFrame{
         numberText.setPreferredSize(new Dimension(100,75));
 
 
-
-        // Declare buttons, adding to panel
-
-        plusBut = new JButton("+");
-        plusBut.addActionListener(lForButton);
-
-        minusBut= new JButton("-");
-        minusBut.addActionListener(lForButton);
-
-        multBut = new JButton("*");
-        multBut.addActionListener(lForButton);
-
-        divBut = new JButton("/");
-        divBut.addActionListener(lForButton);
-
-        equalsBut = new JButton("=");
-        equalsBut.addActionListener(lForButton);
-
-        oneBut = new JButton("1");
-        oneBut.addActionListener(lForButton);
-
-        twoBut = new JButton("2");
-        twoBut.addActionListener(lForButton);
-
-        threeBut = new JButton("3");
-        threeBut.addActionListener(lForButton);
-
-        fourBut = new JButton("4");
-        fourBut.addActionListener(lForButton);
-
-        fiveBut = new JButton("5");
-        fiveBut.addActionListener(lForButton);
-
-        sixBut = new JButton("6");
-        sixBut.addActionListener(lForButton);
-
-        sevenBut = new JButton("7");
-        sevenBut.addActionListener(lForButton);
-
-        eightBut = new JButton("8");
-        eightBut.addActionListener(lForButton);
-
-        nineBut = new JButton("9");
-        nineBut.addActionListener(lForButton);
-
-        zeroBut = new JButton("0");
-        zeroBut.addActionListener(lForButton);
+        int i = 0;
+        for(String[] row:buttons){
+            for(String elementInButtonMatrix:row){
+                //Create new button
+                button[i] = new JButton(elementInButtonMatrix);
+                //Set action command name for button
 
 
-        //Adding buttons to panel
+
+                //Add listener
+                //button.addActionListener(listener);
+                //Add to panel
+                button[i].addActionListener(lForButton);
+                buttonPanel.add(button[i]);
+                i++;
+            }
+        }
+
+       
 
 
-        numberPanel.add(sevenBut);
-        numberPanel.add(eightBut);
-        numberPanel.add(nineBut);
-        numberPanel.add(divBut);
-        numberPanel.add(fourBut);
-        numberPanel.add(fiveBut);
-        numberPanel.add(sixBut);
-        numberPanel.add(multBut);
-        numberPanel.add(oneBut);
-        numberPanel.add(twoBut);
-        numberPanel.add(threeBut);
-        numberPanel.add(minusBut);
-        numberPanel.add(zeroBut);
-        numberPanel.add(plusBut);
-        numberPanel.add(equalsBut);
+
 
         inputPanel.add(numberText, BorderLayout.CENTER);
 
@@ -135,8 +96,7 @@ public class CalcFrame extends JFrame{
         //Adding panels to frame
 
         this.add(inputPanel, BorderLayout.NORTH);
-        this.add(numberPanel, BorderLayout.CENTER);
-        this.add(aritPanel, BorderLayout.EAST);
+        this.add(buttonPanel, BorderLayout.CENTER);
 
         setVisible(true);
         
@@ -146,12 +106,16 @@ public class CalcFrame extends JFrame{
 
         Arithmetic arit = new Arithmetic();
 
+
+
         public void actionPerformed(ActionEvent e){
 
-            if(e.getSource() == equalsBut){
+       
+
+            if(e.getSource() == button[15]){
 
                 temp = numberText.getText();
-
+                System.out.println("==== FUNKER");
                     System.out.println("Second num :" + secondNum + "\n");
                     if (aritFlag == 1) {
 
@@ -181,28 +145,33 @@ public class CalcFrame extends JFrame{
 
             }
 
-            if(e.getSource() == plusBut){
+            if(e.getSource() == button[14]){
 
                 numberText.append("+");
                 aritFlag = 1;
             }
 
-            if(e.getSource() == minusBut){
+            if(e.getSource() == button[11]){
                 numberText.append("-");
                 aritFlag = 2;
             }
 
-            if(e.getSource() == multBut){
+            if(e.getSource() == button[7]){
                 numberText.append("*");
                 aritFlag = 3;
             }
 
-            if(e.getSource() == divBut){
+            if(e.getSource() == button[3]){
                 numberText.append("/");
                 aritFlag = 4;
             }
 
-            if(e.getSource() == oneBut){
+            if(e.getSource() == button[13]){
+                numberText.append("ANS");
+                aritFlag = 5;
+            }
+
+            if(e.getSource() == button[8]){
                 if(aritFlag == 0){
                     firstNum += "1";
 
@@ -213,7 +182,7 @@ public class CalcFrame extends JFrame{
 
             }
 
-            if(e.getSource() == twoBut){
+            if(e.getSource() == button[9]){
                 if(aritFlag == 0){
                     firstNum += "2";
                 }
@@ -222,7 +191,7 @@ public class CalcFrame extends JFrame{
                 }
 
             }
-            if(e.getSource() == threeBut){
+            if(e.getSource() == button[10]){
                 if(aritFlag == 0){
                     firstNum += "3";
                 }
@@ -230,7 +199,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "3";
                 }
             }
-            if(e.getSource() == fourBut){
+            if(e.getSource() == button[4]){
                 if(aritFlag == 0){
                     firstNum += "4";
                 }
@@ -238,7 +207,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "4";
                 }
             }
-            if(e.getSource() == fiveBut){
+            if(e.getSource() == button[5]){
                 if(aritFlag == 0){
                     firstNum += "5";
                 }
@@ -246,7 +215,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "5";
                 }
             }
-            if(e.getSource() == sixBut){
+            if(e.getSource() == button[6]){
                 if(aritFlag == 0){
                     firstNum += "6";
                 }
@@ -254,7 +223,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "6";
                 }
             }
-            if(e.getSource() == sevenBut){
+            if(e.getSource() == button[0]){
                 if(aritFlag == 0){
                     firstNum += "7";
                 }
@@ -263,7 +232,7 @@ public class CalcFrame extends JFrame{
                 }
             }
 
-            if(e.getSource() == eightBut){
+            if(e.getSource() == button[1]){
                 if(aritFlag == 0){
                     firstNum += "8";
                 }
@@ -271,7 +240,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "8";
                 }
             }
-            if(e.getSource() == nineBut){
+            if(e.getSource() == button[2]){
                 if(aritFlag == 0){
                     firstNum += "9";
                 }
@@ -279,7 +248,7 @@ public class CalcFrame extends JFrame{
                     secondNum += "9";
                 }
             }
-            if(e.getSource() == zeroBut){
+            if(e.getSource() == button[12]){
                 if(aritFlag == 0){
                     firstNum += "0";
                 }
@@ -312,7 +281,7 @@ public class CalcFrame extends JFrame{
 
     public void clearText() {
         numberText.setText("");
-        
+
     }
 
 
